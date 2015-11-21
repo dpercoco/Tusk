@@ -1,0 +1,20 @@
+.panel {
+	width:300px;
+	float:left;
+	height:550px;
+	background:#d9dada;
+	position:relative;
+	left:-300px;
+
+}
+.slider-arrow {
+	padding:5px;
+	width:10px;
+	float:left;
+	/* background:#d9dada; 
+	font:400 12px Arial, Helvetica, sans-serif;
+	color:#000; */
+	text-decoration:none;
+	position:relative;
+	/* left:-300px; */
+}

@@ -1,0 +1,59 @@
+ <head>
+    <title>InAppBrowser.executeScript Example</title>
+    <link rel="stylesheet" href="files/resources/lib/jquery-mobile-1.4.5/demos/css/themes/default/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" href="files/resources/lib/jquery-mobile-1.4.5/demos/_assets/css/jqm-demos.css">
+	<script src="files/resources/lib/jquery-mobile-1.4.5/demos/js/jquery.js"></script>
+	<script src="files/resources/lib/jquery-mobile-1.4.5/demos/_assets/js/index.js"></script>
+	<script src="files/resources/lib/jquery-mobile-1.4.5/demos/js/jquery.mobile-1.4.5.min.js"></script>
+	<link rel="stylesheet" href="css/tusk.css" />
+    
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // Wait for device API libraries to load
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Global InAppBrowser reference
+    var iabRef = null;
+    var title = "";
+
+    // Inject our custom JavaScript into the InAppBrowser window
+    //
+    function replaceHeader() {
+        iabRef.executeScript({
+            code: "var b=document.querySelector('body'); var a=document.createElement('div');document.createTextNode('my own header!'); a.appendChild(newContent);b.parentNode.insertBefore(a,b);"
+	    }, function() {
+            alert("Header Element Successfully Hijacked");
+        });
+    }
+
+    function iabClose(event) {
+         iabRef.removeEventListener('loadstop', replaceHeader);
+         //iabRef.removeEventListener('exit', iabClose);
+    }
+
+    // device APIs are available
+    //
+    function onDeviceReady() {
+         iabRef = window.open('http://google.com', '_blank', 'location=yes', 'hidden=yes', 'closebuttoncaption=Return');
+         iabRef.addEventListener( "loadstop", function() {
+		    iabRef.executeScript({ 
+		       //code: "if (!document.getElementById('tuskHeader')) { var b=document.querySelector('body'); var a=document.createElement('div'); a.setAttribute('id', 'tuskHeader'); a.setAttribute('data-role', 'header');a.setAttribute('data-position', 'fixed'); a.setAttribute('data-theme', 'c'); var t = document.createTextNode('Tusk'); a.appendChild(t); b.parentNode.insertBefore(a,b);}"
+	        },function(values) {
+	        	title = values[0];
+	        });
+		 });
+		 
+         iabRef.addEventListener('exit', function(e) {
+         	 alert("Tusk it: " + document.title);
+         	 e.preventDefault();
+         });
+         iabRef.show();
+    }
+
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

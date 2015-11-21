@@ -1,0 +1,82 @@
+ <!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Tusk Home</title>
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+		<link rel="stylesheet" href="files/resources/lib/jquery-mobile-1.4.5/demos/css/themes/default/jquery.mobile-1.4.5.min.css">
+		<link rel="stylesheet" href="files/resources/lib/jquery-mobile-1.4.5/demos/_assets/css/jqm-demos.css">
+		<script src="files/resources/lib/jquery-mobile-1.4.5/jquery.js"></script>
+		<script src="files/resources/lib/jquery-mobile-1.4.5/demos/_assets/js/index.js"></script>
+		
+		<link rel="stylesheet" href="css/tusk.css" />
+		<link rel="stylesheet" href="css/rssFeed.css" />
+		<script src="js/reads.js"></script>
+		<script src="js/browser.js"></script>		
+		<script src="js/database.js"></script>
+		<script src="cordova.js"></script>
+		<script src="js/jquery.validate.js"></script>
+		<script src="files/resources/lib/jquery-mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		
+		
+		<!-- http://code.tutsplus.com/tutorials/phonegap-build-a-feed-reader-project-structure--mobile-20265 -->
+		<script>
+		    $(document).ready(function () {
+		    	console.log('rssFeed is ready!');
+		    	
+		    	function getUrlVars() {
+			       var vars = [],
+			           hash;
+			       var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+			       for (var i = 0; i < hashes.length; i++) {
+			           hash = hashes[i].split('=');
+			           vars.push(hash[0]);
+			           vars[hash[0]] = hash[1];
+			       }
+			       return vars;
+			   }
+			
+			   function getParameterByName(name) {
+			       name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+			       var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+			           results = regex.exec(location.search);
+			       return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+			   }
+			
+			    rssFeed =  getParameterByName('rssFeed');
+			   //alert(getUrlVars()["txt_temp"]);
+   
+		       loadRSSFeed(rssFeed);
+		    });
+		</script>			
+	</head>	
+<body>
+	
+ 
+ <div data-role="header" data-theme="c" data-position="fixed">
+	  <a href="home.html" id="hideButton" target="_self" data-mini='true' data-theme="c" data-iconpos="notext" data-icon="back"></a>
+      <h1>Tusk</h1>
+      <img border="0" id="rss-title-image" src="images/cnn.png" alt="Logo" style="float:right; margin-right: 10px; margin-top: -35px;"/>
+      <!-- 
+      <a id="hideButton" href="#" data-icon="rss-title-image" data-iconpos="notext" class="ui-btn-right jqm-plus"></a>
+      <a href="#" id="hideButton" data-mini='true' data-theme="c" data-iconpos="notext" data-icon="false">
+      	<img id="rss-title-image" class="ui-li-icon" src="images/cnn.png">
+      </a>
+      -->
+</div>
+       
+ <div data-role="content">
+     <ul id="rssReads" data-role="listview" data-theme="a" data-content-theme="d">
+	 </ul>
+ </div>
+  
+ <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+ </div>
+ 
+ <script>
+ 	//loadRSSFeed('cnn');
+ </script>
+ 
+ </body>
+ </html>

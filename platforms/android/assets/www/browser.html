@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>    
+    <head>
+        <title>
+            Search
+        </title>
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Tusk Home</title>
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+		<link rel="stylesheet" href="files/resources/lib/jquery-mobile-1.4.5/demos/css/themes/default/jquery.mobile-1.4.5.min.css">
+		<link rel="stylesheet" href="files/resources/lib/jquery-mobile-1.4.5/demos/_assets/css/jqm-demos.css">
+		<script src="files/resources/lib/jquery-mobile-1.4.5/demos/js/jquery.js"></script>
+		<script src="files/resources/lib/jquery-mobile-1.4.5/demos/_assets/js/index.js"></script>
+		<script src="files/resources/lib/jquery-mobile-1.4.5/demos/js/jquery.mobile-1.4.5.min.js"></script>
+		
+		<link rel="stylesheet" href="css/rssFeed.css" />
+		<link rel="stylesheet" href="css/tusk.css" />
+		
+		<script src="js/browser.js"></script>
+		<script src="js/database.js"></script>
+		<script src="cordova.js"></script>        	<!-- changed from cordova.js -->
+		 
+        <script type="text/javascript">
+            $(document).bind("mobileinit", function()  {
+                $.mobile.loader.prototype.options.text = "loading";
+				$.mobile.loader.prototype.options.textVisible = false;
+				$.mobile.loader.prototype.options.theme = "c"; 
+				$.mobile.loader.prototype.options.html = "";
+				$.mobile.popup.prototype.options.overlayTheme = "c";
+				
+                if (navigator.userAgent.toLowerCase().indexOf("android") != -1)  {
+                    $.mobile.defaultPageTransition = 'none';
+                    $.mobile.defaultDialogTransition = 'none';
+                }
+                else if (navigator.userAgent.toLowerCase().indexOf("msie") != -1) {
+                    $.mobile.allowCrossDomainPages = true;
+                    $.support.cors = true;
+                }
+            });
+             
+             $(document).ready(function() {	
+                loadBrowserContent();
+             	$('#browserUrl').on('click', function () {
+					//loadBrowser();
+					loadBrowserContent();
+				});
+             }); 
+            
+        </script>
+       
+            
+    </head>
+    
+    <body>
+		
+       <div data-role="page" id="home" style="min-height:480px;" id="login" class="type-interior" data-theme="c">
+	    
+                       
+            <div data-role="header" data-position="fixed" data-add-back-btn="false" data-back-btn-text="Back" data-theme="c">
+                <a href="#menuPanel" id="hideButton" data-icon="bars" x-apple-data-detectors="false" 
+                   data-mini='true' data-theme="c" data-iconpos="notext" tabindex="1"></a>
+                <h1>Tusk</h1>                
+            </div>  
+               
+            <div id="content" data-role="content" data-theme="d">
+		    </div>
+	        
+            
+            <div by adding data-id="tuskFooter" data-position="fixed"  data-role="footer" data-theme="b">
+                <!-- mobilenavbar_9 -->
+                <div data-role="navbar" id="login_mobilenavbar_9" name="mobilenavbar_9" dsid="mobilenavbar_9"
+                class="login_mobilenavbar_9" data-theme="b" style="position: relative;">
+                    <ul>
+						<li><a href="home.html">Home</a></li>
+						<li><a href="myReads.html">My Reads</a></li>
+						<li><a id="browserUrl" href="#">Search</a></li>
+					</ul>
+                </div>
+            </div> 
+                   
+        </div>
+    </body>
+
+</html>

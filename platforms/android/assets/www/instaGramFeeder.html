@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="content-language" content="en" />
+<link href="files/resources/lib/theme/jqm/jqm.css" rel="stylesheet" />
+<link href="files/resources/lib/theme/flat-ui/flat-ui.css" rel="stylesheet" />
+<link href="files/resources/lib/jquerymobile/1.4.4/jquery.mobile.structure-1.4.4.css" rel="stylesheet" />
+<script type="text/javascript" src="files/resources/lib/underscore/underscore.js"></script>
+<script type="text/javascript" src="files/resources/lib/store/json2.js"></script>
+<script type="text/javascript" src="files/resources/lib/jquery/jquery-2.1.1.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+<!-- <script src="js/zRSSFeed.js"></script>-->
+<script type="text/javascript">
+/**
+ * Plugin: jquery.zRSSFeed
+ * 
+ * Version: 1.0.1
+ * (c) Copyright 2010, Zazar Ltd
+ * 
+ * Description: jQuery plugin for display of RSS feeds via Google Feed API
+ *              (Based on original plugin jGFeed by jQuery HowTo)
+ * 
+ * Modified by Richard Mackney for Instagram images
+ **/
+(function($){
+ 
+	var current = null; 
+	
+	$.fn.rssfeed = function(url, options) {	
+	
+		// Set pluign defaults
+		var defaults = {
+			limit: 10,
+			header: true,
+			titletag: 'h4',
+			date: true,
+			content: true,
+			snippet: true,
+			showerror: true,
+			errormsg: '',
+			key: null
+		};  
+		var options = $.extend(defaults, options); 
+		
+		// Functions
+		return this.each(function(i, e) {
+			var $e = $(e);
+			
+			// Add feed class to user div
+			if (!$e.hasClass('rssFeed')) $e.addClass('rssFeed');
+			
+			// Check for valid url
+			if(url == null) return false;
+ 
+			// Create Google Feed API address
+			var api = "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&callback=?&q=" + url;
+			if (options.limit != null) api += "&num=" + options.limit;
+			if (options.key != null) api += "&key=" + options.key;
+ 
+			// Send request
+			$.getJSON(api, function(data){
+				
+				// Check for error
+				if (data.responseStatus == 200) {
+	
+					// Process the feeds
+					_callback(e, data.responseData.feed, options);
+				} else {
+ 
+					// Handle error if required
+					if (options.showerror)
+						if (options.errormsg != '') {
+							var msg = options.errormsg;
+						} else {
+							var msg = data.responseDetails;
+						};
+						$(e).html('<div class="rssError"><p>'+ msg +'</p></div>');
+				};
+			});				
+		});
+	};
+	
+	// Callback function to create HTML result
+	var _callback = function(e, feeds, options) {
+		if (!feeds) {
+			return false;
+		}
+		var html = '';	
+		var row = 'odd';	
+		
+		// Add header if required
+		if (options.header)
+			html +=	'<div class="rssHeader">' +
+				'<a href="'+feeds.link+'" title="'+ feeds.description +'">'+ feeds.title +'</a>' +
+				'</div>';
+			
+		// Add body
+		html += '<div class="rssBody">' +
+			'<ul>';
+		
+		// Add feeds
+		for (var i=0; i<feeds.entries.length; i++) {
+			
+			// Get individual feed
+			var entry = feeds.entries[i];
+			
+			// Format published date
+			var entryDate = new Date(entry.publishedDate);
+			var pubDate = entryDate.toLocaleDateString() + ' ' + entryDate.toLocaleTimeString();
+			
+			// Add feed row
+			html += '<li class="rssRow '+row+'">' + 
+				'<'+ options.titletag +'><a href="'+ entry.link +'" title="View this feed at '+ feeds.title +'">'+ entry.title +'</a></'+ options.titletag +'>'
+			if (options.date) html += '<div>'+ pubDate +'</div>'
+			if (options.content) {
+			
+				// Use feed snippet if available and optioned
+				if (options.snippet && entry.contentSnippet != '') {
+					var content = entry.contentSnippet;
+				} else {
+					var content = entry.content;
+				}
+				
+				html += '<p><a href="'+entry.link+'" title="'+ entry.title +' " target="_blank">'+ content +'</a></p>'
+			}
+			
+			html += '</li>';
+			
+			// Alternate row classes
+			if (row == 'odd') {
+				row = 'even';
+			} else {
+				row = 'odd';
+			}			
+		}
+		
+		html += '</ul>' +
+			'</div>'
+		
+		$(e).html(html);
+		$(e).find("a").attr("target","_blank"); // change target here
+	};
+})(jQuery);
+ 
+</script>
+<title>Intagram Feed</title>
+<style type="text/css">
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+.rssFeed {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+.rssFeed a {
+	color: #444;
+	text-decoration: none;
+}
+.rssBody ul {
+	list-style: none;
+}
+.rssBody ul, .rssRow, .rssRow h4, .rssRow p {
+	margin: 0;
+	padding: 0;
+}
+/*
+.rssBody li {
+	width: 100px;
+	/* float: left; /* float for horizontal images */
+}
+*/
+.rssRow {
+	padding: 3px;
+}
+.rssRow h4 {
+	font-size: 0px;
+}
+.rssRow div {
+	color: #666;
+	margin: 0.2em 0 0.4em 0;
+}
+.odd img {
+	/* width: 100px; */
+	height: 30px;
+}
+.even img {
+	/* width: 100px; */
+	height: 30px;
+}
+*/
+</style>
+</head>
+<body>
+<script type="text/javascript">
+$(document).ready(function () {
+	$('#instagram').rssfeed('http://instagr.am/tags/sxsw/feed/recent.rss', {
+		limit: 5,
+		snippet: false,
+		header: false,
+		date: false
+	});
+});
+</script>
+    <div data-role="page" style="min-height:480px;" dsid="login" id="login" class="type-interior"
+        data-theme="b">
+            <div data-role="header" data-position="fixed" data-add-back-btn="false" data-back-btn-text="Back"
+               data-theme="b" name="mobileheader" id="register_mobileheader" class="ui-group-theme-b">
+                <a href="login.html" target="_self" data-role="button" data-theme="b" data-icon="back" id="login_mobilenavbaritem_10" dsid="mobilenavbaritem_10"
+                 name="mobilenavbaritem_10" align="left">
+                Back
+                </a>
+                <h1>Instagram Feeder</h1>
+            </div>
+            
+            <!-- mobilecontainer -->
+            <div data-role="content" id="login_mobilecontainer" name="mobilecontainer" class="login_mobilecontainer ui-content"
+                 dsid="mobilecontainer" data-theme="b">
+				<div id="instagram"></div>
+			</div>
+			
+			<!-- mobilefooter -->
+            <div data-role="footer" data-position="fixed" class="login_mobilefooter" name="mobilefooter"
+               dsid="mobilefooter" id="login_mobilefooter" data-theme="b">
+            </div>
+     </div>
+</body>
+</html>

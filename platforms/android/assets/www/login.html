@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>
+            login
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="files/resources/lib/jquery-mobile-1.4.5/jquery.mobile-1.4.5.min.css">
+        <link rel="stylesheet" href="files/resources/lib/jquery-mobile-1.4.5/demos/_assets/css/jqm-demos.css">
+        <script src="files/resources/lib/jquery-mobile-1.4.5/demos/js/jquery.js"></script>
+	    <!-- <script src="files/resources/lib/jquery/jquery-1.10.2.js"></script>-->
+	    <script src="files/resources/lib/jquery-mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	    
+        <link href="css/tusk.css" rel="stylesheet" />     
+        
+        <script src="cordova.js"></script>
+        <script src="js/jquery.validate.js"></script>	
+		<script src="js/database.js"></script>       
+        <script src="js/contacts.js"></script> 
+        
+        <script type="text/javascript">
+            $(document).bind("mobileinit", function()  {
+                $.mobile.loader.prototype.options.text = "loading";
+				$.mobile.loader.prototype.options.textVisible = false;
+				$.mobile.loader.prototype.options.theme = "c"; 
+				$.mobile.loader.prototype.options.html = "";
+				$.mobile.popup.prototype.options.overlayTheme = "a";
+				
+                if (navigator.userAgent.toLowerCase().indexOf("android") != -1)
+                {
+                    $.mobile.defaultPageTransition = 'none';
+                    $.mobile.defaultDialogTransition = 'none';
+                }
+                else if (navigator.userAgent.toLowerCase().indexOf("msie") != -1)
+                {
+                    $.mobile.allowCrossDomainPages = true;
+                    $.support.cors = true;
+                }
+            });
+        				  
+              $(document).ready(function() { 	          
+	            
+		   		$("#loginForm").validate({
+					rules: {
+						login_password: {
+							required: true,
+							minlength: 4
+						},
+						confirm_password: {
+							required: true,
+							minlength: 4,
+							equalTo: "#password"
+						},
+						login_email: {
+							required: true,
+							email: true
+						}
+					},
+					messages: {
+						login_password: {
+							required: "Please provide a password",
+							minlength: "Your password must be at least 4 characters long"
+						},
+						confirm_password: {
+							required: "Please provide a password",
+							minlength: "Your password must be at least 4 characters long",
+							equalTo: "Please enter the same password as above"
+						},
+						login_email: "Please enter a valid email address"
+					}
+				});
+		
+				// propose username by combining first- and lastname
+				$("#login_email").focus(function() {
+					var firstname = $("#login_first").val();
+					var lastname = $("#login_last").val();
+					if (firstname && lastname && !this.value) {
+						this.value = firstname + "." + lastname;
+					}
+				});
+			});
+			
+			
+			function SubmitIfValid() {
+			
+			    if(!$("#loginForm").valid()) return false;			    
+			    
+			    //$.mobile.loading('show', {theme:"e", text:"Please wait...", textonly:true, textVisible: true});
+			    //$.mobile.loading('hide');			    
+			    
+			    if (validUser($('#login_email').val(),$('#login_password').val())) {
+    				//window.location.href="rssFeeder.html"; 
+    				return true;
+    			}
+			    return false;
+			    
+			}
+        </script>
+    </head>
+    
+    <body>
+        <div data-role="page" style="min-height:480px;" id="login" class="type-interior" data-theme="c">
+            <!-- mobileheader -->
+            <div data-role="header" data-position="fixed" data-add-back-btn="false" data-back-btn-text="Back"
+            data-theme="a" name="mobileheader" id="login_mobileheader" class="login_mobileheader">
+                <h1 dsid="mobileheader">
+                    Tusk
+                </h1>
+            </div>
+            
+            <!-- mobilecontainer -->
+            <div data-role="content" id="login_mobilecontainer" data-theme="a">
+            	<form id="loginForm" method="get" action="">
+	                <!-- login_email -->
+	                <div data-role="fieldcontain" class="no-field-separator">
+	                    <input type="text" name="login_email" value="" placeholder="Email"
+	                    id="login_email" tabindex="1" multiple data-theme="a"
+	                    />
+	                </div>
+	                <!-- login_password -->
+	                <div data-role="fieldcontain" class="no-field-separator">
+	                    <input type="password" name="login_password" value="" placeholder="Password"
+	                    id="login_password" tabindex="2" multiple data-theme="a" 
+	                    />
+	                </div>
+	                
+	                <!-- signin_button -->
+	                <div style="text-align: center;">
+		                <a href="#" onclick="return SubmitIfValid();" target="_self" data-role="button" class="login_signin_button"
+			                id="login_signin_button" data-corners="false" data-icon="none" data-iconpos='nowhere'
+			                x-apple-data-detectors="false" data-inline="true" data-mini="true" data-theme="a"
+			                tabindex="3">
+		                Sign in 
+		                </a>
+	                </div>
+	               
+	                <div class="ui-content" id="popup" class="ui-popupMsg" data-role="popup">
+					    <a class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right" href="#" data-rel="back">Close</a>
+						<p id="popupMsg" class="ui-popup"></p>
+				   </div> 
+					
+	                <!-- registerLink -->
+	                 <div data-role="Link" data-theme="d" style="text-align: center;">
+	                   	<a id="login_forgotLink" href="http://appery.io" name="forgotLink" dsid="forgotLink" 
+	                   	 style="font-size:10px;">Forgot your username or password?
+	                    </a>
+	                </div>
+	            </form>
+            </div>
+            
+                       
+            
+            <!-- mobilefooter -->
+            <div data-role="footer" data-position="fixed" class="login_mobilefooter" name="mobilefooter"
+            dsid="mobilefooter" id="login_mobilefooter" data-theme="a">
+                <!-- mobilenavbar_9 -->
+                <div data-role="navbar" id="login_mobilenavbar_9" name="mobilenavbar_9" dsid="mobilenavbar_9"
+                class="login_mobilenavbar_9" data-theme="a" style="position: relative;">
+                    <ul>
+                        <!-- mobilenavbaritem_10 -->
+                        <li>
+                            <a data-theme="a" href="register.html" data-icon="user" target="_blank">
+                            Register
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+       
+    </body>
+
+</html>

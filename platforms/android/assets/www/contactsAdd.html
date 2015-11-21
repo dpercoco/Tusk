@@ -1,0 +1,85 @@
+ <script src="cordova.js"></script> <!-- Needed for org.apache.cordova.contacts to work -->
+ 
+ <div data-role="header" data-theme="c" >
+    <a href="#contactsShow" target="_self" data-mini='true' data-theme="c" data-iconpos="notext" data-icon="back" id="hideButton"></a>
+    <h1 dsid="mobileheader">
+         New Contact
+    </h1>
+ </div>
+  
+  <div data-role="content" id="contactsAdd_mobilecontainer" data-theme="a">        
+  <!--<div role="main" class="ui-content jqm-content">  -->
+   
+   	<form id="contactForm" method="get" action="">
+        <!-- first_name -->
+        <div data-role="fieldcontain" class="no-field-separator">
+            <input type="text" name="first_name" value="" placeholder="First Name"
+            id="first_name" tabindex="2" multiple data-theme="a" 
+            />
+        </div>
+        
+         <!-- last_name -->
+        <div data-role="fieldcontain" class="no-field-separator">
+            <input type="text" name="last_name" value="" placeholder="Last Name"
+            id="last_name" tabindex="2" multiple data-theme="a" 
+            />
+        </div>
+        
+        <!-- contact_phone -->
+        <div data-role="fieldcontain" class="no-field-separator">
+            <input type="tel" name="contact_phone" value="" placeholder="Mobile Number" data-mask="(000) 000-0000"
+            id="contact_phone" tabindex="1" multiple data-theme="a"/>
+        </div>
+		
+        <!-- contact_email -->
+        <div data-role="fieldcontain" class="no-field-separator">
+            <input type="text" name="contact_email" value="" placeholder="Email"
+            id="contact_email" tabindex="1" multiple data-theme="a"/>
+        </div>
+        
+        <!--
+		    <div data-role="popup" id="myPopup" style="left:50%; margin-left:-50px; top:80%;">
+		   </div> 
+		  -->
+       
+       <!-- 
+       <div id="popupMsg" data-role="popup" data-theme="e" data-overlay-theme="a" class="ui-corner-all ui-content">
+            <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+       		<div data-role="header">
+                 <h3>Added User</h3>
+            </div>
+            <div id="msg" data-role="content">
+            </div>
+       </div>
+        -->               
+     
+        <!-- contact_button -->
+        <div style="text-align: center;">
+         <a href="#" id="contactsAddAnchor" target="_self" data-role="button" 
+          id="contact_button" data-corners="false" data-icon="plus" onclick="return addContact()"
+          x-apple-data-detectors="false" data-inline="true" data-mini="true" data-theme="a"
+          tabindex="3">
+         Add 
+         </a>
+        </div>
+        
+         <div class="ui-content" id="popup" class="ui-popupMsg" data-role="popup">
+		    <a class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right" href="#" data-rel="back">Close</a>
+			<p id="popupMsg" class="ui-popup"></p>
+	   </div>
+    </form>
+   </div>
+              
+   <!--  http://stackoverflow.com/questions/5267569/display-messages-with-jquery-ui
+       <div class="ui-widget">
+    <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+        <p>
+            <span class="ui-icon ui-icon-alert"  style="float: left; margin-right: .3em;"></span>
+            <div id="msg"></div>
+        </p>
+    </div>
+</div>
+ -->
+
+<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+ </div>       

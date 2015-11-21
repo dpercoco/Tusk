@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>    
+    <head>
+        <title>
+            register
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="files/resources/lib/jquery-mobile-1.4.5/jquery.mobile-1.4.5.min.css">
+        <link rel="stylesheet" href="files/resources/lib/jquery-mobile-1.4.5/demos/_assets/css/jqm-demos.css">
+        <script src="files/resources/lib/jquery-mobile-1.4.5/demos/js/jquery.js"></script>
+	    <script src="files/resources/lib/jquery-mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	    
+        <link href="css/tusk.css" rel="stylesheet" />     
+        
+        <script src="cordova.js"></script>
+        <script src="js/jquery.validate.js"></script>	
+		<script src="js/database.js"></script>
+       
+	    <script type="text/javascript">
+            $(document).bind("mobileinit", function()  {
+                $.mobile.loader.prototype.options.text = "loading";
+				$.mobile.loader.prototype.options.textVisible = false;
+				$.mobile.loader.prototype.options.theme = "c"; 
+				$.mobile.loader.prototype.options.html = "";
+				$.mobile.popup.prototype.options.overlayTheme = "a";
+				
+                if (navigator.userAgent.toLowerCase().indexOf("android") != -1)
+                {
+                    $.mobile.defaultPageTransition = 'none';
+                    $.mobile.defaultDialogTransition = 'none';
+                }
+                else if (navigator.userAgent.toLowerCase().indexOf("msie") != -1)
+                {
+                    $.mobile.allowCrossDomainPages = true;
+                    $.support.cors = true;
+                }
+            });
+         			
+          $(document).ready(function() {          
+	   		$("#registerForm").validate({
+				rules: {
+					register_first: "required",
+					register_last: "required",
+					register_phone: {
+						required: true,
+						minlength: 10
+					},
+					register_password: {
+						required: true,
+						minlength: 5
+					},
+					confirm_password: {
+						required: true,
+						minlength: 5,
+						equalTo: "#password"
+					},
+					register_email: {
+						required: true,
+						email: true
+					}
+				},
+				messages: {
+					register_first: "Please enter your firstname",
+					register_last: "Please enter your lastname",
+					register_phone: {
+						required: "Please provide a mobile phone number",
+						minlength: "Your mobile number must be at least 10 characters long"
+					},
+					register_password: {
+						required: "Please provide a password",
+						minlength: "Your password must be at least 5 characters long"
+					},
+					confirm_password: {
+						required: "Please provide a password",
+						minlength: "Your password must be at least 5 characters long",
+						equalTo: "Please enter the same password as above"
+					},
+					register_email: "Please enter a valid email address"
+				}
+			});
+	
+			// propose username by combining first- and lastname
+			$("#register_email").focus(function() {
+				var firstname = $("#register_first").val();
+				var lastname = $("#register_last").val();
+				if (firstname && lastname && !this.value) {
+					//this.value = firstname + "." + lastname;
+				}
+			});
+		});
+		
+		
+		function SubmitIfValid() {
+		
+		    //alert('RegisterForm: SubmitIfValid()');
+		    
+		    if(!$("#registerForm").valid()) return false;
+		    if (insertUser($('#register_email').val(),$('#register_password').val(),
+		                   $('#register_first').val(),$('#register_last').val())) {
+   				window.location.href="home.html"; 
+   				return true;
+   			}
+		}
+        </script>
+    </head>
+    
+    <body>
+        <div data-role="page" style="min-height:480px;" id="register" class="type-interior" data-theme="c">
+            <!-- mobileheader,  -->
+            <div data-role="header" data-position="fixed" id="register_mobileheader" data-theme="c" >
+                <a href="login.html" target="_self" data-mini='true' data-theme="c" data-iconpos="notext" data-icon="back" id="hideButton"></a>
+                 
+                <!-- id="brownButton"
+                <a href="login.html" target="_self" class="ui-icon ui-icon-circle-triangle-w ui-nodisc-icon"></a>
+                <div class="ui-icon ui-icon-arrow-r></div>
+                <a href="login.html" target="_self" data-role="button" data-theme="c" data-icon="back" id="login_mobilenavbaritem_10" 
+                   align="left">
+                Back
+                </a>
+                 -->
+                <h1>Register</h1>
+            </div>
+            
+            <!-- mobilecontainer -->
+            <div data-role="content" id="register_mobilecontainer" data-theme="a">
+                <form id="registerForm" method="get" action="">
+	                <!-- register_first -->
+	                <div data-role="fieldcontain" class="no-field-separator">
+	                    <input type="text" name="register_first" dsid="register_first" value="" placeholder="First Name"
+	                    id="register_first" tabindex="1" multiple data-theme="a" class="register_register_first"
+	                    />
+	                </div>
+	                <!-- register_last -->
+	                <div data-role="fieldcontain" class="no-field-separator">
+	                    <input type="text" name="register_last" dsid="register_last" value="" placeholder="Last Name"
+	                    id="register_last" tabindex="2" multiple data-theme="a" class="register_register_last"
+	                    />
+	                </div>
+	                 <!-- register_phone -->
+	                <div data-role="fieldcontain" class="no-field-separator">
+	                    <input type="text" name="register_phone" value="" placeholder="Mobile Phone#"
+	                    id="register_phone" tabindex="3" multiple data-theme="a" class="register_register_last"
+	                    />
+	                </div>
+	                <!-- register_email -->
+	                <div data-role="fieldcontain" class="no-field-separator">
+	                    <input type="email" name="register_email" dsid="register_email" value="" placeholder="Email"
+	                    id="register_email" tabindex="4" multiple data-theme="a" class="register_register_email"
+	                    />
+	                </div>
+	                <!-- register_password -->
+	                <div data-role="fieldcontain" class="no-field-separator">
+	                    <input type="password" name="register_password" dsid="register_password" value=""
+	                    placeholder="Password" id="register_password" tabindex="5" multiple data-theme="a"
+	                    class="register_register_password" />
+	                </div>
+	                
+	                <!-- signin_button -->
+	                <div style="text-align: center;">
+		                <a href="#" onclick="return SubmitIfValid();" target="_self" data-role="button" class="login_signin_button"
+			                id="login_signin_button" data-corners="false" data-icon="none" data-iconpos='nowhere'
+			                x-apple-data-detectors="false" data-inline="true" data-mini="false" data-theme="a"
+			                tabindex="3">
+		                Create Account 
+		                </a>
+	                </div>
+	               
+	                <div class="ui-content" id="popup" class="ui-popupMsg" data-role="popup">
+					    <a class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right" href="#" data-rel="back">Close</a>
+						<p id="popupMsg" class="ui-popup"></p>
+				   </div> 
+	              
+	            </form>
+            </div>
+            <!-- mobilefooter -->
+            <div data-role="footer" data-position="fixed" id="register_mobilefooter" data-theme="c">
+            </div>
+        </div>
+    </body>
+
+</html>

@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Facebook Javascript SDK Tutorial</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="https://s3.amazonaws.com/hayageek/libs/jquery/bootstrap.min.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  </head>
+
+  <body>
+
+ <!-- Navbar
+    ================================================== -->
+ <div class="navbar navbar-fixed-top">
+   <div class="navbar-inner">
+     <div class="container">
+       <a rel="tooltip" title="Facebook Javascript SDK Tutorial" class="brand" href="http://hayageek.com/facebook-javascript-sdk">Goto Article</a>
+       <div class="nav-collapse collapse" id="main-menu">
+        <ul class="nav" id="main-menu-left">
+          <li><a rel="tooltip" href="http://hayageek.com" title="Hayageek.com Home Page">Home</a></li>
+        </ul>
+        <ul class="nav pull-right" id="main-menu-right" >
+ <li style="margin-top:15px;margin-right:5px;"><form id="paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post"> 
+ <input type="hidden" name="cmd" value="_xclick"> 
+ <input type="hidden" name="business" value="rskusuma@yahoo.com"> 
+ <input type="hidden" name="item_name" value="Support Hayageek.com"> 
+ <input type="hidden" name="buyer_credit_promo_code" value=""> 
+ <input type="hidden" name="buyer_credit_product_category" value=""> 
+ <input type="hidden" name="buyer_credit_shipping_method" value=""> 
+ <input type="hidden" name="buyer_credit_user_address_change" value=""> 
+ <input type="hidden" name="no_shipping" value="0"> 
+ <input type="hidden" name="no_note" value="1"> 
+ <input type="hidden" name="currency_code" value="USD"> 
+ <input type="hidden" name="tax" value="0"> 
+ <input type="hidden" name="lc" value="US"> 
+ <input type="hidden" name="bn" value="PP-DonationsBF"> 
+ <div><input id="butt" type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!"> </div>
+</form>	</li>        
+        <li style="margin-top:15px;margin-right:5px;"><div data-href="http://hayageek.com/facebook-javascript-sdk" class="fb-like" data-layout="button_count" data-send="false" data-show-faces="false" data-width="120"></div></li>
+        <li  style="margin-top:15px;"><a data-url="http://hayageek.com/facebook-javascript-sdk" href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal"></a></li>
+        <li style="margin-top:15px;"><div data-href="http://hayageek.com/facebook-javascript-sdk" class="g-plusone" data-annotation="inline" data-size="medium" data-width="120"></div></li>
+        <form class="navbar-search pull-left" method="GET" action="http://hayageek.com/search.php">
+            <input type="text" size="30" class="search-query" placeholder="Search" name="q" />
+          </form>
+ 
+        </ul>
+ 
+       </div>
+     </div>
+   </div>
+ </div>
+ 
+  <div class="container">
+
+
+<!-- Masthead
+================================================== -->
+<br/><br/>
+
+<section id="typography">
+  <div class="page-header">
+    <h2>Facebook Javascript SDK Tutorial</h2>
+</div>
+  
+<div id="row">
+
+  <div class="row">
+      <div class="well">
+
+<div id="fb-root"></div>
+
+	<div id="status">
+		Click on the button to start the demo:
+		<button class="btn btn-primary  btn-large" onclick="Login()">Login with Facebook</button>
+	</div>
+
+<br/><br/><br/><br/><br/>
+
+<div id="message">
+Events:<br/>
+</div>
+
+
+
+</div>
+</section>
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId: '759720284139421', // Set YOUR APP ID
+      channelUrl : 'http://hayageek.com/examples/oauth/facebook/oauth-javascript/channel.html', // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+    });
+    
+    
+	FB.Event.subscribe('auth.authResponseChange', function(response) 
+	{
+ 	 if (response.status === 'connected') 
+  	{
+  		document.getElementById("message").innerHTML +=  "<br>Connected to Facebook";
+  		//SUCCESS
+  		
+  	}	 
+	else if (response.status === 'not_authorized') 
+    {
+    	document.getElementById("message").innerHTML +=  "<br>Failed to Connect";
+
+		//FAILED
+    } else 
+    {
+    	document.getElementById("message").innerHTML +=  "<br>Logged Out";
+
+    	//UNKNOWN ERROR
+    }
+	});	
+	
+    };
+    
+   	function Login()
+	{
+	
+		FB.login(function(response) {
+		   if (response.authResponse) 
+		   {
+		    	getUserInfo();
+  			} else 
+  			{
+  	    	 console.log('User cancelled login or did not fully authorize.');
+   			}
+		 },{scope: 'email,user_photos,user_videos'});
+	
+	
+	}
+
+  function getUserInfo() {
+	    FB.api('/me', function(response) {
+
+	  var str="<b>Name</b> : "+response.name+"<br>";
+	  	  str +="<b>Link: </b>"+response.link+"<br>";
+	  	  str +="<b>Username:</b> "+response.username+"<br>";
+	  	  str +="<b>id: </b>"+response.id+"<br>";
+	  	  str +="<b>Email:</b> "+response.email+"<br>";
+	  	  str +="<button class='btn btn-info' onclick='getPhoto();'>Get Photo</button>&nbsp;";
+	  	  str +="<button class='btn btn-primary'  onclick='Logout();'>Logout</button>";
+	  	  document.getElementById("status").innerHTML=str;
+	  	  	    
+    });
+    }
+	function getPhoto()
+	{
+	  FB.api('/me/picture?type=normal', function(response) {
+
+		  var str="<br/><b>Pic</b> : <img src='"+response.data.url+"'/>";
+	  	  document.getElementById("status").innerHTML+=str;
+	  	  	    
+    });
+	
+	}
+	function Logout()
+	{
+		FB.logout(function(){document.location.reload();});
+	}
+
+  // Load the SDK asynchronously
+  (function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document));
+
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Top Banner-Bing -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:970px;height:90px"
+     data-ad-client="ca-pub-0923466578214929"
+     data-ad-slot="6444020521"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<div class="row">
+<div class="well">
+<b>Please Share it with your friends:</b><br/><br/>
+<a data-url="http://hayageek.com/facebook-javascript-sdk" href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal"></a>
+<div data-href="http://hayageek.com/facebook-javascript-sdk" class="g-plusone" data-annotation="inline" data-size="medium" data-width="120"></div>
+<div data-href="http://hayageek.com/facebook-javascript-sdk" class="fb-like" data-layout="button_count" data-send="false" data-show-faces="false" data-width="120"></div>
+<br/>
+
+<div class="g-person" data-width="450" data-href="//plus.google.com/118255177648356108079" data-layout="landscape" data-rel="author"></div>
+<form id="paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post"> 
+ <input type="hidden" name="cmd" value="_xclick"> 
+ <input type="hidden" name="business" value="rskusuma@yahoo.com"> 
+ <input type="hidden" name="item_name" value="Support Hayageek.com"> 
+ <input type="hidden" name="buyer_credit_promo_code" value=""> 
+ <input type="hidden" name="buyer_credit_product_category" value=""> 
+ <input type="hidden" name="buyer_credit_shipping_method" value=""> 
+ <input type="hidden" name="buyer_credit_user_address_change" value=""> 
+ <input type="hidden" name="no_shipping" value="0"> 
+ <input type="hidden" name="no_note" value="1"> 
+ <input type="hidden" name="currency_code" value="USD"> 
+ <input type="hidden" name="tax" value="0"> 
+ <input type="hidden" name="lc" value="US"> 
+ <input type="hidden" name="bn" value="PP-DonationsBF"> 
+ <div><input id="butt" type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!"> </div>
+</form>	
+</div>
+</div>
+
+
+     <!-- Footer
+      ================================================== -->
+      <hr>
+
+      <footer id="footer">
+        <p class="pull-right"><a href="#top">Back to top</a></p>
+        <div class="links">
+          <a href="http://hayageek.com" >Blog</a>
+        </div>
+      </footer>
+
+    </div><!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script>
+
+function loadSocial(){
+	
+		$.getScript('http://platform.twitter.com/widgets.js');
+		 $.getScript("http://connect.facebook.net/en_US/all.js#xfbml=1", function () {
+            FB.init({ status: true, cookie: true, xfbml: true });
+        });
+        $.getScript('https://apis.google.com/js/plusone.js',function()
+        {
+         	$(".g-plusone").each(function () {
+        		    gapi.plusone.render($(this).get(0));
+		        });
+        });
+	
+}
+	$(document).ready(function()
+	{
+		setTimeout( "loadSocial()",1000 );
+		$('a[rel=tooltip]').tooltip({'placement': 'bottom'});
+	});
+</script>
+<script src="https://s3.amazonaws.com/hayageek/libs/jquery/bootstrap.min.js"></script>
+
+  </body>
+</html>

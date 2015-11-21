@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Tusk Home</title>
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+		<link rel="stylesheet" href="files/resources/lib/jquery-mobile-1.4.5/demos/css/themes/default/jquery.mobile-1.4.5.min.css">
+		<link rel="stylesheet" href="files/resources/lib/jquery-mobile-1.4.5/demos/_assets/css/jqm-demos.css">
+		<script src="files/resources/lib/jquery-mobile-1.4.5/demos/js/jquery.js"></script>
+		<script src="files/resources/lib/jquery-mobile-1.4.5/demos/_assets/js/index.js"></script>
+		<script src="files/resources/lib/jquery-mobile-1.4.5/demos/js/jquery.mobile-1.4.5.min.js"></script>
+		
+		<link rel="stylesheet" href="css/rssFeed.css" />
+		<link rel="stylesheet" href="css/tusk.css" />
+		
+		<script src="js/browser.js"></script>
+		<script src="js/database.js"></script>
+		<script src="js/contacts.js"></script>
+		<script src="js/facebook.js"></script>
+		<!--  <script src="cordova.js"></script> Including this makes contactsShow not work -->
+		<script src="js/jquery.validate.js"></script>
+		
+		<script>		
+		  		    				
+			 $(document).ready(function() {	
+			 	$("#contactForm").validate({
+					rules: {
+						first_name: {
+							required: true
+						},
+						last_name: {
+							required: true
+						},
+						contact_email: {
+							required: true,
+							email: true
+						}
+					},
+					messages: {
+						first_name: {
+							required: "Please provide a first name"
+						},
+						last_name: {
+							required: "Please provide a last name"
+						},
+						contact_email: "Please enter a valid email address"
+					}
+				}); 
+				
+				
+				//loadMyReads(); 				
+				//$("#myReadsSet").collapsible("expand");				       	 	
+				
+				loadMyFriendsReads();	
+				$("#myFriendsReadsSet").collapsible("expand");
+				
+				
+				$(document).on('expand collapse', '#myFriendsReadsSet, #myReadsSet', function (e) {
+				    if (e.type == 'expand') {				       
+				    }
+    			});
+    			
+				$(".ui-collapsible").on("collapsibleexpand", function () { 
+					console.log(this.id);
+					var oldclass = 'ui-btn-up-a ui-body-a';
+			        var newclass = 'ui-btn-up-e ui-body-e';
+			        if (this.id=='myReadsSet') loadMyReads();
+			        $(this).find('a').removeClass(oldclass + ' ui-btn-hover-a').addClass(newclass + ' ui-btn-hover-e');
+			        $(this).find('.ui-collapsible-content').removeClass(oldclass).addClass(newclass);					
+				});
+				
+				$('#contactsShow').load('contactsShow.html', function () {
+					$(this).trigger("updatelayout");
+				});
+				
+				$('#contactsShowAnchor').on('click', function () {
+					loadContacts();
+				});
+				
+				$('#contactsAdd').load('contactsAdd.html', function () {
+					$(this).trigger("updatelayout");
+				});
+				
+				$('#contactsAddAnchor').on('click', function () {
+					addContact();
+				});
+				
+				$('#browserUrl').on('click', function () {
+					loadInAppBrowser();
+					//loadBrowser();
+					//loadBrowserContent();
+				});
+				
+				$('#myFriendsReadsMore').load('myFriendsReadsMore.html', function () {
+					$(this).trigger("updatelayout");
+				});
+				
+								
+				
+				
+				//$('#myReads-list-divider-id').click(function(){
+				//    $(this).siblings().toggle();
+				//    $(this).toggleClass("ui-corner-bottom");
+				//});
+				
+			 });
+			 
+			 $(document).on("click", '.ui-li-divider', function (e) {
+			    var IsCollapsed = false;
+			    var TheDivider = $(this);
+			    var li = TheDivider.next(':not(.ui-li-divider)');
+			    while (li.length > 0) {
+			        IsCollapsed = li.css('display') == 'none';
+			        li.slideToggle(300);
+			        li = li.next(':not(.ui-li-divider)');
+			    }
+			
+			    var $icon = TheDivider.find('.inlineIcon');
+			    if (!IsCollapsed) {
+			        $icon.removeClass('ui-icon-minus').addClass('ui-icon-plus');
+			    } else {
+			        $icon.removeClass('ui-icon-plus').addClass('ui-icon-minus');
+			    }
+			    e.stopPropagation();
+			    return false;
+			});
+
+			 $(document).on("pagecreate", "#myFriendsReadsMore", function () {
+			     
+			     $(".friendsGroup .ui-collapsible-heading-toggle").on("click", function (e) {        
+			        var current = $(this).closest(".ui-collapsible");
+			        if (current.hasClass("ui-collapsible-collapsed")) {
+			            $(".ui-collapsible-content", current).slideDown("fast", function () {
+			                current.trigger("collapsibleexpand");  
+			                //hide previously expanded
+			                $(".friendsGroup  .ui-collapsible-content-collapsed").slideUp('fast');
+			                
+			            });
+			        } else {
+			            $(".ui-collapsible-content", current).slideUp("fast", function () {
+			                current.trigger("collapsiblecollapse");
+			            });
+			        }
+			    });
+			    
+			        $(".col .ui-collapsible-heading-toggle").not(".friendsGroup .ui-collapsible-heading-toggle").on("click", function (e) {        
+			        var current = $(this).closest(".ui-collapsible");             
+			        if (current.hasClass("ui-collapsible-collapsed")) {
+			            $(".ui-collapsible-content", current).not(".friendsGroup .ui-collapsible-content").slideDown("fast", function () {
+			                current.trigger("collapsibleexpand");  
+			                //hide previously expanded               
+			            });
+			        } else {
+			            $(".ui-collapsible-content", current).not(".friendsGroup .ui-collapsible-content").slideUp("fast", function () {
+			                current.trigger("collapsiblecollapse");
+			            });
+			        }
+			    });
+			    //var ic = '<span class="ui-icon-minus ui-btn-icon-notext inlineIcon"></span>';
+			    //$(".ui-li-divider").prepend(ic);
+			 });
+
+			 $(document).on('pageinit', '#home', function () {
+        	    
+        	    $.mobile.loading('hide');
+        	    
+        	 	var _menuLoaded = false;
+				$('#menuPanel').load('menu.html', function () {
+					$(this).find(":jqmData(role=listview)").listview();
+					$(this).trigger("updatelayout");
+					$.mobile.loading("hide");
+					_menuLoaded = true;
+				});
+		
+				$("#menuPanel").on("panelopen", function (event, ui) {
+					if (!_menuLoaded) {
+						$.mobile.loading("show");
+						return;
+					}
+					$("#menuPanel").off("panelopen");
+				});
+				
+			});
+		</script>
+			
+	</head>
+	
+	<body>
+	<div data-role="page" id="home" style="min-height:480px;" id="login" class="type-interior" data-theme="c">
+	<!-- <div data-role="page" id="home" class="jqm-demos" data-quicklinks="true"> -->
+        
+            <div data-role="panel" id="menuPanel" data-display="reveal" data-position="left" 
+               data-dismissible="true" data-theme="a">
+            </div>
+            
+            <div data-role="header" data-position="fixed" data-add-back-btn="false" data-back-btn-text="Back" data-theme="c">
+                <a href="#menuPanel" id="hideButton" data-icon="bars" x-apple-data-detectors="false" 
+                   data-mini='true' data-theme="c" data-iconpos="notext" tabindex="1"></a>
+                <h1>Tusk</h1>                
+            </div>
+            
+            <div data-role="content">             
+                	<div id="myFriendsReadsSet" data-role="collapsible" data-mini="true" data-collapsed-icon="arrow-r" 
+                	    data-expanded-icon="arrow-d" >
+						<h3>What are my friends reading?</h3>	
+						
+						<ul id="myFriendsReads" data-role="listview" data-content-theme="d">
+	                    </ul> 
+	                    
+						<!--
+						<div id="friendsGroupID" data-role="collapsible-set"  data-iconpos="left" data-collapsed-icon="carat-d" 
+						          data-expanded-icon="carat-u" class="friendsGroup"> 
+						</div>
+						-->
+						
+						<!--  
+						http://stackoverflow.com/questions/21417176/custom-animation-for-collapsible-set-not-working-in-jquerymobile-1-4-0
+						 <ul id="myFriendsReads" data-role="listview" data-content-theme="d">
+	                    </ul> 
+	                     -->
+	                     
+	                       
+	                </div>  
+					<div data-role="collapsible" id="myReadsSet"  data-mini="true" data-collapsed-icon="arrow-r" 
+					   data-expanded-icon="arrow-d" >
+						<h2>My Reads</h2>	                
+	                    <ul id="myReads" data-role="listview" data-content-theme="d">
+	                    </ul>
+	                </div>
+                </div>                
+            </div> 
+            
+            <div data-role="footer" data-position="fixed" data-tap-toggle="true" class="jqm-footer">
+            <!--<div id="tuskFooter" data-id="tuskFooter" data-position="fixed" data-role="footer" data-tap-toggle="true" data-theme="c" class="tuskFooter">-->
+	              <div data-role="navbar" data-theme="c">
+	                  <ul>
+						<!-- <li><a href="#contactsShow" id="contactsShowAnchor" data-icon="user"></a></li>-->
+						<li><a href="#contactsShow" onclick="return loadContacts();" data-icon="user"></a></li>
+						<li><a href="myFriendsReadsMore" onclick="" data-icon="action"></a></li>
+						<!--<li><a href="#" onclick="return uploadContacts();"  data-icon="action"></a></li>  -->
+						<li><a id="facebookUrl" href="#" onclick="return loadFacebook();" data-icon="facebook"></a></li>	
+						<li><a id="browserUrl" href="#" data-icon="search"></a></li>
+					  </ul>						
+	              </div>
+	        </div>             
+      </div>
+      
+      
+       <!-- CONTACTS SHOW   -->
+       <div data-role="page" id="contactsShow"  data-theme="a" class="jqm-demos">
+       </div>
+       
+       
+       <!-- CONTACTS ADD   -->
+       <div data-role="page" id="contactsAdd" data-theme="a" class="jqm-demos">       	 	  
+       </div>
+      
+       
+       <!-- myFriendsReadsMore   -->
+       <div data-role="page" id="myFriendsReadsMore" data-theme="a" class="jqm-demos">       	 	  
+       </div>
+       
+        
+       <!-- BROWSER  NOT USED
+       <div data-role="page" id="browserContent" data-theme="a" class="jqm-demos">       	 	  
+       </div>
+       -->
+       
+    </body>
+
+</html>

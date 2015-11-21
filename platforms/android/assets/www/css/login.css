@@ -1,0 +1,83 @@
+/* Define default spinner */
+.ui-icon-loading {
+	background: url("../files/resources/lib/jquerymobile/1.4.4/images/ajax-loader.gif") repeat scroll 0 0 / 46px 46px transparent!important;
+}
+/* registerLink */
+.login_registerLink {
+	margin: 4px 0px 4px 0px;
+	display: block;
+	vertical-align: middle;
+	padding: 2px;
+	cursor: pointer;
+}
+.login_registerLink_link_wrapper > .login_registerLink,
+.login_registerLink_link_wrapper > .login_registerLink:hover,
+.login_registerLink_link_wrapper > .login_registerLink:active,
+.login_registerLink_link_wrapper > .login_registerLink:visited {
+	text-decoration: underline; font-weight: normal; color: #2489ce; text-align: left; font-family: Helvetica; font-size: 12px;
+}
+/* forgotLink */
+.login_forgot {
+	margin: 4px 0px 4px 0px;
+	display: block;
+	vertical-align: middle;
+	align: center;
+	padding: 2px;
+	cursor: pointer;
+}
+.login_forgot_link_wrapper > .login_forgot,
+.login_forgot_link_wrapper > .login_forgot:hover,
+.login_forgot_link_wrapper > .login_forgot:active,
+.login_forgot_link_wrapper > .login_forgot:visited {
+	text-decoration: underline; font-weight: normal; color: #2489ce; text-align: center; font-family: Helvetica; font-size: 9px;
+}
+/* mobilefooter */
+.login_mobilefooter {
+	min-height:38px;
+}
+/* mobilenavbar_9 */
+.login_mobilenavbar_9 {
+
+}
+.login_mobilenavbar_9 .ui-grid-a .ui-block-a {
+	clear:none;
+}
+.ui-footer .login_mobilenavbar_9 ul li:last-child a {
+	margin-right: 1px !important;
+}
+.ui-header .login_mobilenavbar_9 ul li:last-child a {
+	margin-right: -1px !important;
+}
+.login_mobilenavbar_9 ul.ui-grid-duo li:nth-child(even) a {
+	margin-right: 1px !important;
+}
+
+form.loginForm label.error, label.error {
+	/* remove the next line when you have trouble in IE6 with labels in list */
+	color: red;
+	font-style: italic;
+	font-size: 10px;
+}
+.no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url(img/loading.gif) center no-repeat #fff;
+}
+.spinner {
+    position: fixed;
+    top: 70%;
+    left: 50%;
+    margin-left: -50px; /* half width of the spinner gif */
+    margin-top: -50px; /* half height of the spinner gif */
+    text-align:center;
+    z-index:1234;
+    overflow: auto;
+    width: 100px; /* width of the spinner gif */
+    height: 102px; /*hight of the spinner gif +2px to fix IE8 issue */
+}

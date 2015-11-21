@@ -1,0 +1,123 @@
+.ui-icon-loading {
+	background: url("../files/resources/lib/jquery-mobile-1.4.5/images/ajax-loader.gif") repeat scroll 0 0 / 46px 46px transparent!important;
+}
+form.registerForm label.error, label.error {
+	/* remove the next line when you have trouble in IE6 with labels in list */
+	color: red;
+	font-style: italic;
+	font-size: 10px;
+}
+.ui-header, .ui-footer {
+    background: #8B4513; /** brown **/
+    color: #ffffff;
+    text-shadow: 0 /*{a-bar-shadow-x}*/ 1px /*{a-bar-shadow-y}*/ 0 /*{a-bar-shadow-radius}*/ #808080/*{a-bar-shadow-color}*/;
+	
+    /** color: #f1da36; yellow 
+    font-weight: bold;**/
+}
+.ui-content {
+    /**  background: #ffffff; white **/
+}
+.ui-hide-label.ui-br, .no-field-separator {
+    border-bottom-width: 0;
+}
+.ui-field-contain.ui-hide-label, .no-field-separator {
+    margin: 1em 0;
+    padding: 0;
+}
+.menu-li-icon {
+	height:50px;
+	width:50px;	
+}
+.#menuList .ui-li {
+    height :32px;
+    top: -10px;
+}
+.menu-li {
+    height :32px;    
+    top: -10px;
+    /**background-color: #535353 !important;
+    color: white;**/
+}
+.menuTitle {
+	font-size:12px !important;	
+}
+ul.menuText li {
+    font-size:12px;
+}
+#contactList .ui-li {
+    height :20px;
+    top: -10px;
+}
+.contacts-li {
+    height :32px !important;    
+    /**top: -10px;
+    background-color: #535353 !important;
+    color: white;**/
+}
+.contactList-name {
+	font-size:12px !important;	
+	font-weight:bold;
+}
+.myReads-list-divider {
+    height :28px !important;
+}
+#myFriendsReadsSet .ui-content {
+    background-color: white !important;
+}
+#myFriendsReadsSet {
+    width: 98% !important; 
+    margin-left: 2px !important; 
+    border-width: 0px !important; 
+    background-color: white  !important;
+}
+#myFriendsReads .ui-li {
+   /** height : 20%; TO SET HEIGHT **/
+}
+#myReadsSet .ui-content {
+    background-color: white !important;
+}
+#myReadsSet {
+    width: 98% !important; 
+    margin-left: 2px !important; 
+    border-width: 0px !important; 
+    background-color: white  !important;
+}
+.wrap {
+    white-space: normal !important;
+}
+.ui-li {
+    height : 40%;
+    font-size: 10px;
+}
+.ui-icon-facebook:after {
+	/* background-image: url("images/facebook_32.png"); */
+	background-image: url("file:///android_res/drawable/facebook_32.png");
+	/* background-position: 3px 3px; */
+	background-size: 100%;
+}
+.ui-popup {
+	max-width: 250px; 
+	min-width:200px;
+	background: #ffff66;
+	color: #8B4513;
+	font-size: 12px;
+	font-weight:bold;
+}
+.ui-popupMsg {
+	padding-top: 5em; 
+	padding-bottom: 5em;
+}
+#hideButton {
+    background-color: #8B4513;
+    border-color: #8B4513;
+    text-shadow: 0 1px 0 #8B4513;
+    outline: none;
+    -webkit-box-shadow: 0 0 0px #8B4513 /*{a-active-background-color}*/;
+	-moz-box-shadow: 0 0 0px #8B4513 /*{a-active-background-color}*/;
+	box-shadow: 0 0 0px #8B4513 /*{a-active-background-color}*/;	 
+}
+
+.inline-buttons{ 
+	display: inline-block; margin: 0; 
+}

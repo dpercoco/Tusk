@@ -1,0 +1,1 @@
+09-19 14:58:33.840: D/CordovaLog(1065): file:///android_asset/www/js/browser.js: Line 329 : INSERT READ: date:2015-09-19 14:58:33, url:http://m.platosclosetraritan.com/, image:http://m.platoscloset.com/users/photos/locations/4150.jpg?salt=635774942671126291

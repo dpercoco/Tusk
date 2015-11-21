@@ -1,0 +1,28 @@
+ <div data-role="header" data-theme="c" >
+	  <a href="#home" id="hideButton" target="_self" data-mini='true' data-theme="c" data-iconpos="notext" data-icon="back"></a>
+      <h1>Tusk Contacts</h1>
+ </div>
+       
+  <div role="main" class="ui-content jqm-content">
+       <div>
+          <!--  data-autodividers="true"  -->
+          <ul id="contactList" data-role="listview" data-filter="true" data-filter-placeholder="Search Contacts..." 
+              data-inset="true" data-theme="a" data-content-theme="b">
+          </ul>
+ 	   </div>
+  </div>
+  
+   <div class="ui-content" id="popup" class="ui-popupMsg" data-role="popup">
+	    <a class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right" href="#" data-rel="back">Close</a>
+		<p id="popupMsg" class="ui-popup"></p>
+   </div>
+	   
+  <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+  	<div data-role="navbar" data-theme="c">
+      <ul>
+		<li><a href="#contactsAdd" id="contactsShowAnchor" data-icon="plus"></a></li>
+		<li><a href="#" onclick="return deleteAllContacts();" data-icon="delete"></a></li>						
+		<li><a href="#" onclick="return uploadContacts();"  data-icon="action"></a></li>
+	  </ul>						
+    </div>
+ </div>      
