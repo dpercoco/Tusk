@@ -18,16 +18,10 @@
 		<param name="APP_NAME" value="Tusk" /> 
 	</gap:plugin>
     -->
-    
     <author href="https://sub.example.com" email="someone@email.com">
         Yourname
     </author>
-	
-    <gap:plugin name="org.apache.cordova.contacts" />
-    <gap:plugin name="org.apache.cordova.dialogs" />
-    <gap:plugin name="org.apache.cordova.inappbrowser" />
-    <gap:plugin name="org.apache.cordova.splashscreen" />
-    
+
 	<!-- Customize your app and platform with the preference element. -->
 	<!--  <gap:plugin name="org.apache.cordova.battery-status" />
     <gap:plugin name="org.apache.cordova.camera" />

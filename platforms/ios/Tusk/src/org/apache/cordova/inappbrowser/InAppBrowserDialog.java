@@ -16,7 +16,7 @@
        specific language governing permissions and limitations
        under the License.
 */
-package com.initialxy.cordova.themeablebrowser;
+package org.apache.cordova.inappbrowser;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -29,32 +29,30 @@ import org.json.JSONObject;
 /**
  * Created by Oliver on 22/11/2013.
  */
-public class ThemeableBrowserDialog extends Dialog {
+public class InAppBrowserDialog extends Dialog {
     Context context;
-    ThemeableBrowser themeableBrowser = null;
-    boolean hardwareBack;
+    InAppBrowser inAppBrowser = null;
 
-    public ThemeableBrowserDialog(Context context, int theme,
-          boolean hardwareBack) {
+    public InAppBrowserDialog(Context context, int theme) {
         super(context, theme);
         this.context = context;
-        this.hardwareBack = hardwareBack;
     }
 
-    public void setThemeableBrowser(ThemeableBrowser browser) {
-        this.themeableBrowser = browser;
+    public void setInAppBroswer(InAppBrowser browser) {
+        this.inAppBrowser = browser;
     }
 
-    public void onBackPressed () {
-        if (this.themeableBrowser == null) {
+    
+    public void onBackPressed () { //TEST THIS
+        if (this.inAppBrowser == null) {
             this.dismiss();
         } else {
-            // better to go through in themeableBrowser because it does a clean
-            // up
-            if (this.hardwareBack && this.themeableBrowser.canGoBack()) {
-                this.themeableBrowser.goBack();
+            // better to go through the in inAppBrowser
+            // because it does a clean up
+            if (this.inAppBrowser.hardwareBack() && this.inAppBrowser.canGoBack()) { //DAHIL
+                this.inAppBrowser.goBack();
             }  else {
-                this.themeableBrowser.closeDialog();
+                this.inAppBrowser.closeDialog(); 
             }
         }
     }
