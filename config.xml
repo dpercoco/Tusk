@@ -12,18 +12,18 @@
     </author>
     <content src="index.html" />
     
-    <!-- FB Connect Section -->
+    <!-- FB Connect Section 
 	<gap:plugin name="com.phonegap.plugins.facebookconnect">
-		<param name="APP_ID" value="759720284139421" /> <!-- FB App ID-->
-		<param name="APP_NAME" value="Tusk" /> <!-- FB App Namespace-->
+		<param name="APP_ID" value="759720284139421" /> 
+		<param name="APP_NAME" value="Tusk" /> 
 	</gap:plugin>
-
+    -->
     <author href="https://sub.example.com" email="someone@email.com">
         Yourname
     </author>
 
 	<!-- Customize your app and platform with the preference element. -->
-	<gap:plugin name="org.apache.cordova.battery-status" />
+	<!--  <gap:plugin name="org.apache.cordova.battery-status" />
     <gap:plugin name="org.apache.cordova.camera" />
     <gap:plugin name="org.apache.cordova.media-capture" />
     <gap:plugin name="org.apache.cordova.console" />
@@ -41,7 +41,7 @@
     <gap:plugin name="org.apache.cordova.network-information" />
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.vibration" />
-    <gap:plugin name="org.apache.cordova.contacts" />
+    <gap:plugin name="org.apache.cordova.contacts" />-->
     
 	<!-- Core Plugin -->	
     <preference name="orientation"                value="default" />        <!-- all: default means both landscape and portrait are enabled -->
