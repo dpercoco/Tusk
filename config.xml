@@ -23,10 +23,10 @@
         Yourname
     </author>
 	
-    <gap:plugin name="org.apache.cordova.contacts" />
-    <gap:plugin name="org.apache.cordova.dialogs" />
-    <gap:plugin name="org.apache.cordova.inappbrowser" />
-    <gap:plugin name="org.apache.cordova.splashscreen" />
+    <plugin name="org.apache.cordova.contacts" />
+    <plugin name="org.apache.cordova.dialogs" />
+    <plugin name="org.apache.cordova.inappbrowser" />
+    <plugin name="org.apache.cordova.splashscreen" />
     
 	<!-- Customize your app and platform with the preference element. -->
 	<!--  <gap:plugin name="org.apache.cordova.battery-status" />
